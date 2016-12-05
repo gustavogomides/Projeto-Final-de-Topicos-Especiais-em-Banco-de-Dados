@@ -1,0 +1,617 @@
+<script src="http://d3plus.org/js/d3.js"></script>
+<script src="http://d3plus.org/js/d3plus.js"></script>
+
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+#primary{  
+   float: left;
+   width: 600px;  
+   height: 600px; 
+}
+
+#secondary{	
+	margin-left: 600px; 
+	height: 600px;   
+}
+
+#page-bar ul {
+	list-style-position: inside;
+	list-style-image: none;
+	list-style-type: none;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<ul id="page-bar">
+	<button id="btnSituacao" onclick="graficoSituacao();">Situação</button>
+	<button id="btnEscolaridade" onclick="graficoEscolaridade();">Escolaridade</button>
+	<button id="btnRegime" onclick="graficoRegime();">Regime</button>
+	<button id="btnSexo" onclick="graficoSexo();">Sexo</button>
+	<button id="btnIdade" onclick="graficoIdade();">Idade</button>
+	<button id="btnCor" onclick="graficoCor();">Cor</button>
+	<button id="btnNacionalidade" onclick="graficoNacionalidade();">Nacionalidade</button>
+	<button id="btnAtuacao" onclick="graficoAtuacao();">Atuação</button>
+</ul>
+
+<div id="primary"></div>
+<div id="secondary"></div>
+
+<script>
+
+	// SITUAÇÃO
+	function graficoSituacao() {
+		document.getElementById("secondary").innerHTML = "";
+		var situacao = [ 
+			{"situacao":"Afastado para qualificação", "quantidade":5, "cor":"#E5C212"},
+			{"situacao":"Em exercício", "quantidade":471, "cor":"#E5C212"},
+			{"situacao":"Afastado por outros motivos", "quantidade":18, "cor":"#E5C212"}
+		]
+
+		document.getElementById("primary").innerHTML = "";
+		visualization = d3plus.viz()
+		    .container("#primary")
+		    .title("Quantidade de Docentes por Situação")
+		    .data(situacao)
+		    .type("bar")
+		    .color("cor")
+		    .id("situacao")
+		    .x({"grid": false})
+		    .x("situacao")
+		    .y("quantidade")
+		    .order("quantidade")
+		    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraSituacaoEspecifico(d.situacao);
+		    }})
+		    .draw()
+
+		function graficoBarraSituacaoEspecifico(situacaoNome){
+		
+			//Esvazia a div
+			document.getElementById("secondary").innerHTML = "";
+
+			if(situacaoNome=="Afastado para qualificação"){
+				situacao = [ 
+					{"sexo":"Masculino", "quantidade":2, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":3, "cor":"#BF2828"}
+					]
+			}else if(situacaoNome=="Afastado por outros motivos"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":14, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":4, "cor":"#BF2828"}
+				]
+			}else{
+				situacao = [
+					{"sexo":"Masculino", "quantidade":355, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":116, "cor":"#BF2828"}
+				]
+			}
+
+			visualization = d3plus.viz()
+				.container("#secondary")
+			    .title("Docentes " + situacaoNome)
+			    .data(situacao)					//fonte dos dados
+			    .type("pie")					//tipo de gráfico
+			    .id("sexo")					//critério de agrupamento
+			    .size("quantidade")					//valor do tamanho
+			    .color("cor")
+			    .tooltip({
+				    "share": false
+				})
+				.legend(false)
+			    .draw()
+		}
+	}
+
+	// ESCOLARIDADE
+	function graficoEscolaridade() {
+		 document.getElementById("secondary").innerHTML = "";
+		var situacao = [ 
+			{"escolaridade":"Doutorado", "quantidade":340, "cor":"#71B5DA"},
+			{"escolaridade":"Mestrado", "quantidade":118, "cor":"#71B5DA"},
+			{"escolaridade":"Graduação", "quantidade":32, "cor":"#71B5DA"},
+			{"escolaridade":"Especialização", "quantidade":4, "cor":"#71B5DA"}
+		]
+
+		document.getElementById("primary").innerHTML = "";
+		visualization = d3plus.viz()
+		    .container("#primary")
+		    .title("Quantidade de Docentes por Escolaridade")
+		    .data(situacao)
+		    .type("bar")
+		    .color("cor")
+		    .id("escolaridade")
+		    .x({"grid": false})
+		    .x("escolaridade")
+		    .y("quantidade")
+		    .order("quantidade")
+		    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraSituacaoEspecifico(d.escolaridade);
+		    }})
+		    .draw()
+
+		function graficoBarraSituacaoEspecifico(escolaridadeNome){
+		
+			//Esvazia a div
+			document.getElementById("secondary").innerHTML = "";
+
+			if(escolaridadeNome=="Doutorado"){
+				situacao = [ 
+					{"sexo":"Masculino", "quantidade":261, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":79, "cor":"#BF2828"}
+					]
+			}else if(escolaridadeNome=="Mestrado"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":80, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":38, "cor":"#BF2828"}
+				]
+			}else if(escolaridadeNome=="Graduação"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":26, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":6, "cor":"#BF2828"}
+				]
+			}else{
+				situacao = [
+					{"sexo":"Masculino", "quantidade":4, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":0, "cor":"#BF2828"}
+				]
+			}
+
+			visualization = d3plus.viz()
+				.container("#secondary")
+			    .title("Docentes com " + escolaridadeNome)
+			    .data(situacao)					//fonte dos dados
+			    .type("pie")					//tipo de gráfico
+			    .id("sexo")					//critério de agrupamento
+			    .size("quantidade")					//valor do tamanho
+			    .color("cor")
+			    .tooltip({
+				    "share": false
+				})
+				.legend(false)
+			    .draw()
+		}
+	}
+
+
+	// REGIME
+	function graficoRegime() {
+		 document.getElementById("secondary").innerHTML = "";
+		var situacao = [ 
+			{"regime":"Outros", "quantidade":23, "cor":"#F29C4B"},
+			{"regime":"Tempo Parcial", "quantidade":15, "cor":"#F29C4B"},
+			{"regime":"Tempo Integral com dedicação exclusiva", "quantidade":430, "cor":"#F29C4B"},
+			{"regime":"Tempo Integral sem dedicação exclusiva", "quantidade":26, "cor":"#F29C4B"}
+		]
+
+		document.getElementById("primary").innerHTML = "";
+		visualization = d3plus.viz()
+		    .container("#primary")
+		    .title("Quantidade de Docentes por Regime")
+		    .data(situacao)
+		    .type("bar")
+		    .color("cor")
+		    .id("regime")
+		    .x({"grid": false})
+		    .x("regime")
+		    .y("quantidade")
+		    .order("quantidade")
+		    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraSituacaoEspecifico(d.regime);
+		    }})
+		    .draw()
+
+		function graficoBarraSituacaoEspecifico(regimeNome){
+		
+			//Esvazia a div
+			document.getElementById("secondary").innerHTML = "";
+
+			if(regimeNome=="Tempo Integral sem dedicação exclusiva"){
+				situacao = [ 
+					{"sexo":"Masculino", "quantidade":18, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":8, "cor":"#BF2828"}
+					]
+			}else if(regimeNome=="Tempo Integral com dedicação exclusiva"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":325, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":105, "cor":"#BF2828"}
+				]
+			}else if(regimeNome=="Tempo Parcial"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":12, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":3, "cor":"#BF2828"}
+				]
+			}else{
+				situacao = [
+					{"sexo":"Masculino", "quantidade":16, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":7, "cor":"#BF2828"}
+				]
+			}
+
+			visualization = d3plus.viz()
+				.container("#secondary")
+			    .title("Docentes em " + regimeNome)
+			    .data(situacao)					//fonte dos dados
+			    .type("pie")					//tipo de gráfico
+			    .id("sexo")					//critério de agrupamento
+			    .size("quantidade")					//valor do tamanho
+			    .color("cor")
+			    .tooltip({
+				    "share": false
+				})
+				.legend(false)
+			    .draw()
+		}
+	}
+
+
+	// SEXO
+	function graficoSexo() {
+		 document.getElementById("secondary").innerHTML = "";
+		var situacao = [ 
+			{"sexo":"Masculino", "quantidade":371, "cor":"#4B0BEB"},
+			{"sexo":"Feminino", "quantidade":123, "cor":"#BF2828"}
+		]
+
+		document.getElementById("primary").innerHTML = "";
+
+		visualization = d3plus.viz()
+		    .container("#primary")
+		    .title("Quantidade de Docentes por Sexo")
+		    .data(situacao)					//fonte dos dados
+		    .type("pie")					//tipo de gráfico
+		    .id("sexo")					//critério de agrupamento
+		    .size("quantidade")					//valor do tamanho
+		    .color("cor")
+		    .tooltip({
+			    "share": false
+			})
+			.legend(false)
+		    .draw()
+	}
+
+
+	// IDADE
+	function graficoIdade() {
+		 document.getElementById("secondary").innerHTML = "";
+		var situacao = [ 
+			{"idade":"entre 20 e 30", "quantidade":52, "cor":"#4BF27D"},
+			{"idade":"entre 31 e 40", "quantidade":195, "cor":"#4BF27D"},
+			{"idade":"entre 41 e 50", "quantidade":129, "cor":"#4BF27D"},
+			{"idade":"entre 51 e 60", "quantidade":95, "cor":"#4BF27D"},
+			{"idade":"entre 61 e 70", "quantidade":22, "cor":"#4BF27D"},
+			{"idade":"entre 71 e 80", "quantidade":1, "cor":"#4BF27D"}
+		]
+
+		document.getElementById("primary").innerHTML = "";
+
+		visualization = d3plus.viz()
+		    .container("#primary")
+		    .title("Docentes por Idade")
+		    .data(situacao)
+		    .type("bar")
+		    .color("cor")
+		    .id("idade")
+		    .x({"grid": false})
+		    .x("idade")
+		    .y("quantidade")
+		    .legend(false)
+		    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraSituacaoEspecifico(d.idade);
+		    }})
+		    .draw()
+
+
+
+		function graficoBarraSituacaoEspecifico(idadeNome){
+		
+			//Esvazia a div
+			document.getElementById("secondary").innerHTML = "";
+
+			if(idadeNome=="entre 20 e 30"){
+				situacao = [ 
+					{"idade":"24", "quantidade":2, "cor":"#4BF2E4"},
+					{"idade":"25", "quantidade":4, "cor":"#4BF2E4"},
+					{"idade":"26", "quantidade":6, "cor":"#4BF2E4"},
+					{"idade":"27", "quantidade":6, "cor":"#4BF2E4"},
+					{"idade":"28", "quantidade":10, "cor":"#4BF2E4"},
+					{"idade":"29", "quantidade":9, "cor":"#4BF2E4"},
+					{"idade":"30", "quantidade":14, "cor":"#4BF2E4"}
+					]
+			}else if(idadeNome=="entre 31 e 40"){
+				situacao = [
+					{"idade":"31", "quantidade":16, "cor":"#4BF2E4"},
+					{"idade":"32", "quantidade":16, "cor":"#4BF2E4"},
+					{"idade":"33", "quantidade":28, "cor":"#4BF2E4"},
+					{"idade":"34", "quantidade":24, "cor":"#4BF2E4"},
+					{"idade":"35", "quantidade":22, "cor":"#4BF2E4"},
+					{"idade":"36", "quantidade":22, "cor":"#4BF2E4"},
+					{"idade":"37", "quantidade":15, "cor":"#4BF2E4"},
+					{"idade":"38", "quantidade":23, "cor":"#4BF2E4"},
+					{"idade":"39", "quantidade":11, "cor":"#4BF2E4"},
+					{"idade":"40", "quantidade":18, "cor":"#4BF2E4"}
+				]
+			}else if(idadeNome=="entre 41 e 50"){
+				situacao = [
+					{"idade":"41", "quantidade":15, "cor":"#4BF2E4"},
+					{"idade":"42", "quantidade":18, "cor":"#4BF2E4"},
+					{"idade":"43", "quantidade":15, "cor":"#4BF2E4"},
+					{"idade":"44", "quantidade":16, "cor":"#4BF2E4"},
+					{"idade":"45", "quantidade":11, "cor":"#4BF2E4"},
+					{"idade":"46", "quantidade":22, "cor":"#4BF2E4"},
+					{"idade":"47", "quantidade":5, "cor":"#4BF2E4"},
+					{"idade":"48", "quantidade":8, "cor":"#4BF2E4"},
+					{"idade":"49", "quantidade":12, "cor":"#4BF2E4"},
+					{"idade":"50", "quantidade":7, "cor":"#4BF2E4"}
+				]
+			}else if(idadeNome=="entre 51 e 60"){
+				situacao = [
+					{"idade":"51", "quantidade":6, "cor":"#4BF2E4"},
+					{"idade":"52", "quantidade":9, "cor":"#4BF2E4"},
+					{"idade":"53", "quantidade":7, "cor":"#4BF2E4"},
+					{"idade":"54", "quantidade":16, "cor":"#4BF2E4"},
+					{"idade":"55", "quantidade":10, "cor":"#4BF2E4"},
+					{"idade":"56", "quantidade":10, "cor":"#4BF2E4"},
+					{"idade":"57", "quantidade":13, "cor":"#4BF2E4"},
+					{"idade":"58", "quantidade":12, "cor":"#4BF2E4"},
+					{"idade":"59", "quantidade":6, "cor":"#4BF2E4"},
+					{"idade":"60", "quantidade":6, "cor":"#4BF2E4"}
+				]
+			}else if(idadeNome=="entre 61 e 70"){
+				situacao = [
+					{"idade":"61", "quantidade":3, "cor":"#4BF2E4"},
+					{"idade":"62", "quantidade":4, "cor":"#4BF2E4"},
+					{"idade":"63", "quantidade":5, "cor":"#4BF2E4"},
+					{"idade":"64", "quantidade":5, "cor":"#4BF2E4"},
+					{"idade":"66", "quantidade":3, "cor":"#4BF2E4"},
+					{"idade":"69", "quantidade":2, "cor":"#4BF2E4"}
+				]
+			}else{
+				situacao = [
+					{"idade":"80", "quantidade":1, "cor":"#4BF2E4"}
+				]
+			}
+
+			visualization = d3plus.viz()
+			    .container("#secondary")
+			    .title("Docentes " + idadeNome + " anos")
+			    .data(situacao)
+			    .type("bar")
+			    .color("cor")
+			    .id("idade")
+				.x({"grid": false})
+				.x("idade")
+			    .y("quantidade")
+			    .legend(false)
+			    .draw()
+		}
+	}
+
+	// COR
+	function graficoCor() {
+		 document.getElementById("secondary").innerHTML = "";
+		var situacao = [ 
+			{"cor":"Preta", "quantidade":2, "color":"#797ACD"},
+			{"cor":"Branca", "quantidade":71, "color":"#797ACD"},
+			{"cor":"Parda", "quantidade":9, "color":"#797ACD"},
+			{"cor":"Não Declarado", "quantidade":407, "color":"#797ACD"},
+			{"cor":"Amarela", "quantidade":5, "color":"#797ACD"}
+		]
+
+		document.getElementById("primary").innerHTML = "";
+		visualization = d3plus.viz()
+		    .container("#primary")
+		    .title("Quantidade de Docentes por Cor")
+		    .data(situacao)
+		    .type("bar")
+		    .color("color")
+		    .id("cor")
+		    .x({"grid": false})
+		    .x("cor")
+		    .y("quantidade")
+		    .order("quantidade")
+		    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraSituacaoEspecifico(d.cor);
+		    }})
+		    .draw()
+
+		function graficoBarraSituacaoEspecifico(corNome){
+		
+			//Esvazia a div
+			document.getElementById("secondary").innerHTML = "";
+
+			if(corNome=="Preta"){
+				situacao = [ 
+					{"sexo":"Masculino", "quantidade":1, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":1, "cor":"#BF2828"}
+					]
+			}else if(corNome=="Branca"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":56, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":15, "cor":"#BF2828"}
+				]
+			}else if(corNome=="Parda"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":9, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":0, "cor":"#BF2828"}
+				]
+			}else if(corNome=="Não Declarado"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":106, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":301, "cor":"#BF2828"}
+				]
+			}else{
+				situacao = [
+					{"sexo":"Masculino", "quantidade":4, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":1, "cor":"#BF2828"}
+				]
+			}
+
+			visualization = d3plus.viz()
+				.container("#secondary")
+			    .title("Docentes de cor " + corNome)
+			    .data(situacao)					//fonte dos dados
+			    .type("pie")					//tipo de gráfico
+			    .id("sexo")					//critério de agrupamento
+			    .size("quantidade")					//valor do tamanho
+			    .color("cor")
+			    .tooltip({
+				    "share": false
+				})
+				.legend(false)
+			    .draw()
+		}
+	}
+
+	// NACIONALIDADE
+	function graficoNacionalidade() {
+		 document.getElementById("secondary").innerHTML = "";
+		var situacao = [ 
+			{"nacionalidade":"Brasileira", "quantidade":475, "color":"#CB79CD"},
+			{"nacionalidade":"Brasileira - nascido no exterior ou naturalizado", "quantidade":3, "color":"#CB79CD"},
+			{"nacionalidade":"Estrangeira", "quantidade":16, "color":"#CB79CD"}
+		]
+
+		document.getElementById("primary").innerHTML = "";
+		visualization = d3plus.viz()
+		    .container("#primary")
+		    .title("Quantidade de Docentes por Nacionalidade")
+		    .data(situacao)
+		    .type("bar")
+		    .color("color")
+		    .id("nacionalidade")
+		    .x({"grid": false})
+		    .x("nacionalidade")
+		    .y("quantidade")
+		    .order("quantidade")
+		    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraSituacaoEspecifico(d.nacionalidade);
+		    }})
+		    .draw()
+
+		function graficoBarraSituacaoEspecifico(nacionalidadeNome){
+		
+			//Esvazia a div
+			document.getElementById("secondary").innerHTML = "";
+
+			if(nacionalidadeNome=="Brasileira"){
+				situacao = [ 
+					{"sexo":"Masculino", "quantidade":355, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":120, "cor":"#BF2828"}
+					]
+			}else if(nacionalidadeNome=="Brasileira - nascido no exterior ou naturalizado"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":3, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":0, "cor":"#BF2828"}
+				]
+			}else{
+				situacao = [
+					{"sexo":"Masculino", "quantidade":13, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":3, "cor":"#BF2828"}
+				]
+			}
+
+			visualization = d3plus.viz()
+				.container("#secondary")
+			    .title("Docentes de Nacionalidade " + nacionalidadeNome)
+			    .data(situacao)					//fonte dos dados
+			    .type("pie")					//tipo de gráfico
+			    .id("sexo")					//critério de agrupamento
+			    .size("quantidade")					//valor do tamanho
+			    .color("cor")
+			    .tooltip({
+				    "share": false
+				})
+				.legend(false)
+			    .draw()
+		}
+	}
+
+	// ATUAÇÃO
+	function graficoAtuacao() {
+		 document.getElementById("secondary").innerHTML = "";
+		var situacao = [ 
+			{"atuacao":"Ensino à Distância", "quantidade":21, "color":"#86A467"},
+			{"atuacao":"Atividades de Extensão", "quantidade":240, "color":"#86A467"},
+			{"atuacao":"Atividades de Gestão, Planejamento e Avaliação", "quantidade":409, "color":"#86A467"},
+			{"atuacao":"Cursos de Graduação Presencial", "quantidade":462, "color":"#86A467"},
+			{"atuacao":"Curso de Pós-Graduação Stricto Sensu Presencial", "quantidade":166, "color":"#86A467"},
+			{"atuacao":"Pesquisa no Âmbito de Projetos e Programas", "quantidade":388, "color":"#86A467"}
+		]
+
+		document.getElementById("primary").innerHTML = "";
+		visualization = d3plus.viz()
+		    .container("#primary")
+		    .title("Quantidade de Docentes por Atuação")
+		    .data(situacao)
+		    .type("bar")
+		    .color("color")
+		    .id("atuacao")
+		    .x({"grid": false})
+		    .x("atuacao")
+		    .y("quantidade")
+		    .order("quantidade")
+		    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraSituacaoEspecifico(d.atuacao);
+		    }})
+		    .draw()
+
+		function graficoBarraSituacaoEspecifico(atuacaoNome){
+		
+			//Esvazia a div
+			document.getElementById("secondary").innerHTML = "";
+
+			if(atuacaoNome=="Ensino à Distância"){
+				situacao = [ 
+					{"sexo":"Masculino", "quantidade":16, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":5, "cor":"#BF2828"}
+					]
+			}else if(atuacaoNome=="Atividades de Extensão"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":180, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":60, "cor":"#BF2828"}
+				]
+			}else if(atuacaoNome=="Atividades de Gestão, Planejamento e Avaliação"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":302, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":107, "cor":"#BF2828"}
+				]
+			}else if(atuacaoNome=="Cursos de Graduação Presencial"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":349, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":113, "cor":"#BF2828"}
+				]
+			}else if(atuacaoNome=="Curso de Pós-Graduação Stricto Sensu Presencial"){
+				situacao = [
+					{"sexo":"Masculino", "quantidade":128, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":38, "cor":"#BF2828"}
+				]
+			}else{
+				situacao = [
+					{"sexo":"Masculino", "quantidade":285, "cor":"#4B0BEB"},
+					{"sexo":"Feminino", "quantidade":103, "cor":"#BF2828"}
+				]
+			}
+
+			visualization = d3plus.viz()
+				.container("#secondary")
+			    .title("Docentes atuando em " + atuacaoNome)
+			    .data(situacao)					//fonte dos dados
+			    .type("pie")					//tipo de gráfico
+			    .id("sexo")					//critério de agrupamento
+			    .size("quantidade")					//valor do tamanho
+			    .color("cor")
+			    .tooltip({
+				    "share": false
+				})
+				.legend(false)
+			    .draw()
+		}
+	}
+</script>
