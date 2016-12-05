@@ -1,0 +1,164 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+#primary{  
+   float: left;
+   width: 550px;  
+   height: 550px; 
+}
+
+#secondary{	
+	margin-left: 600px; 
+	height: 600px;   
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<script src="http://d3plus.org/js/d3.js"></script>
+<script src="http://d3plus.org/js/d3plus.js"></script>
+
+<div id="primary"></div>
+
+<div id="secondary"></div>
+
+<script>
+
+	var dados = [
+		{"receita":"Receita Bruta", "fonte":"Outros Serviços", "valor":317, "cor": "#60B6C9"},
+		{"receita":"Receita Bruta", "fonte":"Serviços Administrativos e Comerciais Gerais", "valor":244204.15, "cor": "#60B6C9"},
+		{"receita":"Receita Bruta", "fonte":"Serviços de Informação e Tecnologia", "valor":126535.09, "cor": "#60B6C9"},
+		{"receita":"Receita Bruta", "fonte":"Restituição de Despesas de Exercícios Anteriores", "valor":821.2, "cor": "#60B6C9"},
+		{"receita":"Receita Bruta", "fonte":"Iscrições em Concursos e Processos Seletivos", "valor":195050, "cor": "#60B6C9"},
+		{"receita":"Receita Bruta", "fonte":"Aluguéis, Arrendamentos, Foros, Laudêmios, Tarifas de Ocupação", "valor":211726.7, "cor": "#60B6C9"},
+		{"receita":"Receita Bruta", "fonte":"Outras Indenizações", "valor":26616.52, "cor": "#60B6C9"},
+
+		{"receita":"Receita Líquida", "fonte":"Outros Serviços", "valor":317, "cor": "#434348"},
+		{"receita":"Receita Líquida", "fonte":"Serviços Administrativos e Comerciais Gerais", "valor":244204.15, "cor": "#434348"},
+		{"receita":"Receita Líquida", "fonte":"Serviços de Informação e Tecnologia", "valor":126535.09, "cor": "#434348"},
+		{"receita":"Receita Líquida", "fonte":"Restituição de Despesas de Exercícios Anteriores", "valor":821.2, "cor": "#434348"},
+		{"receita":"Receita Líquida", "fonte":"Iscrições em Concursos e Processos Seletivos", "valor":194530, "cor": "#434348"},
+		{"receita":"Receita Líquida", "fonte":"Aluguéis, Arrendamentos, Foros, Laudêmios, Tarifas de Ocupação", "valor":206235.5, "cor": "#434348"},
+		{"receita":"Receita Líquida", "fonte":"Outras Indenizações", "valor":24117.74, "cor": "#434348"}
+	]
+
+	var tipo;
+
+	visualization = d3plus.viz()
+	    .container("#primary")
+	    .title("Receita em 2016")
+	    .data(dados)
+	    .type("bar")
+	    .color("cor")
+	    .id("receita")
+	    .x({"grid": false})
+	    .x("receita")
+	    .y({"label":"Valor R$"})
+	    .y("valor")
+	    .order("valor")
+	    .legend({"size": 50})
+	    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraEspecifico();
+		    }})
+	    .draw()
+
+	function graficoBarraEspecifico(){
+	
+		//Esvazia a div
+		document.getElementById("secondary").innerHTML = "";
+
+		var data = [
+			{"receita":"Receita Bruta", "fonte":"Outros Serviços", "valor":317, "cor": "#60B6C9"},
+			{"receita":"Receita Bruta", "fonte":"Serviços Administrativos e Comerciais Gerais", "valor":244204.15, "cor": "#60B6C9"},
+			{"receita":"Receita Bruta", "fonte":"Serviços de Informação e Tecnologia", "valor":126535.09, "cor": "#60B6C9"},
+			{"receita":"Receita Bruta", "fonte":"Restituição de Despesas de Exercícios Anteriores", "valor":821.2, "cor": "#60B6C9"},
+			{"receita":"Receita Bruta", "fonte":"Iscrições em Concursos e Processos Seletivos", "valor":195050, "cor": "#60B6C9"},
+			{"receita":"Receita Bruta", "fonte":"Aluguéis, Arrendamentos, Foros, Laudêmios, Tarifas de Ocupação", "valor":211726.7, "cor": "#60B6C9"},
+			{"receita":"Receita Bruta", "fonte":"Outras Indenizações", "valor":26616.52, "cor": "#60B6C9"},
+
+			{"receita":"Receita Líquida", "fonte":"Outros Serviços", "valor":317, "cor": "#434348"},
+			{"receita":"Receita Líquida", "fonte":"Serviços Administrativos e Comerciais Gerais", "valor":244204.15, "cor": "#434348"},
+			{"receita":"Receita Líquida", "fonte":"Serviços de Informação e Tecnologia", "valor":126535.09, "cor": "#434348"},
+			{"receita":"Receita Líquida", "fonte":"Restituição de Despesas de Exercícios Anteriores", "valor":821.2, "cor": "#434348"},
+			{"receita":"Receita Líquida", "fonte":"Iscrições em Concursos e Processos Seletivos", "valor":194530, "cor": "#434348"},
+			{"receita":"Receita Líquida", "fonte":"Aluguéis, Arrendamentos, Foros, Laudêmios, Tarifas de Ocupação", "valor":206235.5, "cor": "#434348"},
+			{"receita":"Receita Líquida", "fonte":"Outras Indenizações", "valor":24117.74, "cor": "#434348"}
+		]
+		visualization = d3plus.viz()
+	    .container("#secondary")
+	    .title("Fonte das Receitas em 2016")
+	    .data(data)
+	    .type("bar")
+	    .color("cor")
+	    .id("receita")
+	    .x({"grid": false})
+	    .x("fonte")
+	    .y({"label":"Valor R$"})
+	    .y("valor")
+	    .order("valor")
+	    .order({"sort": "desc"})
+	    .legend({"size": 50})
+	    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraEspecifico2(d.receita);
+		    }})
+	    .draw()
+
+	}
+
+	function graficoBarraEspecifico2(tipoReceita){
+	
+		//Esvazia a div
+		document.getElementById("secondary").innerHTML = "";
+
+		var data2;
+
+		if(tipoReceita == "Receita Bruta"){
+			data2 = [
+				{"fonte":"Outros Serviços", "valor":317, "cor": "#60B6C9"},
+				{"fonte":"Serviços Administrativos e Comerciais Gerais", "valor":244204.15, "cor": "#60B6C9"},
+				{"fonte":"Serviços de Informação e Tecnologia", "valor":126535.09, "cor": "#60B6C9"},
+				{"fonte":"Restituição de Despesas de Exercícios Anteriores", "valor":821.2, "cor": "#60B6C9"},
+				{"fonte":"Iscrições em Concursos e Processos Seletivos", "valor":195050, "cor": "#60B6C9"},
+				{"fonte":"Aluguéis, Arrendamentos, Foros, Laudêmios, Tarifas de Ocupação", "valor":211726.7, "cor": "#60B6C9"},
+				{"fonte":"Outras Indenizações", "valor":26616.52, "cor": "#60B6C9"}
+			]
+		}else{
+			data2 = [
+				{"fonte":"Outros Serviços", "valor":317, "cor": "#434348"},
+				{"fonte":"Serviços Administrativos e Comerciais Gerais", "valor":244204.15, "cor": "#434348"},
+				{"fonte":"Serviços de Informação e Tecnologia", "valor":126535.09, "cor": "#434348"},
+				{"fonte":"Restituição de Despesas de Exercícios Anteriores", "valor":821.2, "cor": "#434348"},
+				{"fonte":"Iscrições em Concursos e Processos Seletivos", "valor":194530, "cor": "#434348"},
+				{"fonte":"Aluguéis, Arrendamentos, Foros, Laudêmios, Tarifas de Ocupação", "valor":206235.5, "cor": "#434348"},
+				{"fonte":"Outras Indenizações", "valor":24117.74, "cor": "#434348"}
+			]
+		}
+	
+		visualization = d3plus.viz()
+	    .container("#secondary")
+	    .title("Fonte das Receitas " + tipoReceita + " em 2016")
+	    .data(data2)
+	    .type("bar")
+	    .color("cor")
+	    .id("fonte")
+	    .x({"grid": false})
+	    .x("fonte")
+	    .y({"label":"Valor R$"})
+	    .y("valor")
+	    .order("valor")
+	    .order({"sort": "desc"})
+	    .legend({"size": 50})
+	    .mouse({"click":function (d){	//função a ser rodada quando houver clique
+		    	graficoBarraEspecifico();
+		    }})
+	    .draw()
+
+	}
+	
+</script>
